@@ -1,56 +1,57 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import React from "react";
-import {Link, useNavigation} from "expo-router";
-/*
-expo route built on top of react-navigation library 
-it has all features & property of react navigation */
-const index = () => {
-  //const name = "johndoe";
-  const navigation = useNavigation();
-  return (
-    <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-      <Text>index</Text>
-      {/* use can use ref */}
-      <Link
-        //href={`/settings?name=${name}`} //share using params
-        href={{pathname: "settings", params: {name: "john doe"}}} //using method
-        style={{fontSize: 20, fontWeight: "bold"}}
-      >
-        go to settings
-      </Link>
-      {/* another way to navigate using useNavigation hook*/}
-      <TouchableOpacity
-        style={{
-          width: "90%",
-          height: 60,
-          marginTop: 20,
-          backgroundColor: "red",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={() => navigation.navigate("(tabs)", {name: "oggy"})}
-      >
-        <Text style={{fontSize: 20, fontWeight: "bold", color: "white"}}>
-          navigate
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          width: "90%",
-          height: 60,
-          marginTop: 20,
-          backgroundColor: "red",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onPress={() => navigation.navigate("notifications")}
-      >
-        <Text style={{fontSize: 20, fontWeight: "bold", color: "white"}}>
-          notification
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+import { Button, StyleSheet, Text, View } from 'react-native'
+import React, { Component } from 'react'
 
-export default index;
+class LifeCycleCompoent extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      count: 0
+    }
+    console.log("constructor called")
+  }
+
+  componentDidMount() {
+    console.log("compoennt did mount called")
+  }
+  componentDidUpdate() {
+    console.log("compoennt did update called")
+  }
+
+  componentWillUnmount() {
+    /*manually reload the app in terminal to call 
+    /compontwillunmount fuction */
+    console.log("compoennt will unmount called")
+  }
+
+  increment = () => {
+    this.setState({count:this.state.count+1})
+  }
+
+
+  render() {
+    console.log("render called")
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>{this.state.count}</Text>
+        <Button title='increment' onPress={this.increment} />
+      </View>
+
+    )
+  }
+
+}
+
+export default LifeCycleCompoent
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontSize: 16,
+    fontFamily: 'bold',
+    color: 'red'
+  }
+})
